@@ -26,8 +26,8 @@ create_environment:
 ## Install Python Dependencies
 install_requirements:
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel --no-cache-dir
-	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
-	$(PYTHON_INTERPRETER) -m pip install -e .
+	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt --no-cache-dir
+	$(PYTHON_INTERPRETER) -m pip install -e . --no-cache-dir
 
 ## Download data
 download_quickdraw:
@@ -37,7 +37,7 @@ download_quickdraw:
 ## Filter data
 filter_quickdraw:
 	sh scripts/filter_quickdraw/filter_data_all.sh
-	
+
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
