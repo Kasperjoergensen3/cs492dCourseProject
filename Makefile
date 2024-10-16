@@ -31,8 +31,8 @@ install_requirements:
 
 ## Download data
 download_quickdraw:
-	mkdir -p data/raw/quickdraw
-	gsutil -m cp 'gs://quickdraw_dataset/full/simplified/*.ndjson' data/raw/quickdraw/
+	mkdir -p data/quickdraw/raw/
+	gsutil -m cp 'gs://quickdraw_dataset/full/simplified/*.ndjson' data/quickdraw/raw/
 
 ## Filter data
 filter_quickdraw:

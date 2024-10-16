@@ -162,7 +162,7 @@ cython_debug/
 #.idea/
 
 # Ignore all files in data/raw/
-data/raw/*
+data/**/raw/*
 
 # Ignore all .png files in data/processed/ and its subfolders
-data/processed/**/*.png
+data/**/processed/**/*.png
