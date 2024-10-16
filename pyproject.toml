@@ -3,7 +3,7 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Sequential Sketch Stroke Generation"
+name = "seqsketch"
 version = "0.0.1"
 description = "Course project for CS492(D): Diffusion Models and Their Applications"
 authors = [
