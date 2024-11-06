@@ -18,6 +18,8 @@ data:
     val_size: 0.2
     data_size: [64, 64]
     max_samples: null
+    intensity_scale: 100
+    num_workers: 3
 
 model:
   module: SeqStrokeDiffusionModule
@@ -43,7 +45,7 @@ model:
     num_inference_timesteps: 1000
     lr: 1.0e-4
     lr_schedule: "exponential_decay_0.01"
-    conditioning: ["current_strokes"]
+    conditioning: []
 
 trainer:
   max_epochs: 1000

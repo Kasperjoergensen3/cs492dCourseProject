@@ -8,13 +8,14 @@ import json
 import ndjson
 import pytorch_lightning as pl
 from PIL import Image
-from torchvision.transforms import Grayscale, ToTensor, Compose
+from torchvision.transforms import Grayscale, ToTensor, Compose, Lambda
 from torchvision.transforms.functional import invert
 from PIL import ImageDraw, Image
 
 
 class ImageDataset(Dataset):
     def __init__(self, data_list, transform=None, data_size=(256, 256)):
+        super().__init__()
         self.data_list = data_list
         self.transform = transform
         self.data_size = data_size
@@ -48,12 +49,14 @@ class QuickDrawDataModule(pl.LightningDataModule):
         params,
     ):
         super().__init__()
+        self.params = params
         self.data_dir = Path(params.data_dir).joinpath(params.category)
         self.category = params.category
         self.val_size = params.val_size
         self.batch_size = params.batch_size
         self.data_size = params.data_size
         self.max_samples = params.max_samples
+        self.num_workers = params.num_workers
 
     def make_data_splitting(self):
         data_split_json = self.data_dir.joinpath("train_test_indices.json")
@@ -113,6 +116,7 @@ class QuickDrawDataModule(pl.LightningDataModule):
                 Grayscale(num_output_channels=1),
                 invert,
                 ToTensor(),
+                Lambda(lambda x: x * self.params.intensity_scale),
             ]
         )
         return transforms
@@ -132,7 +136,7 @@ class QuickDrawDataModule(pl.LightningDataModule):
             self.test_set = ImageDataset(self.train_samples)
 
     def train_dataloader(self):
-        return DataLoader(self.train_set, self.batch_size)
+        return DataLoader(self.train_set, self.batch_size, num_workers=self.num_workers)
 
     def val_dataloader(self):
-        return DataLoader(self.val_set, self.batch_size)
+        return DataLoader(self.val_set, self.batch_size, num_workers=self.num_workers)

@@ -23,9 +23,10 @@ class ImageLogger(Callback):
             ax,
         ):
             if im is None:
-                im = np.zeros(self.x.shape[2:])
-            a.imshow(im.squeeze().detach().cpu().numpy(), cmap="gray", vmin=0, vmax=1)
+                im = torch.zeros_like(true_image)
+            im_display = a.imshow(im.squeeze().detach().cpu().numpy(), cmap="gray")
             a.set_title(title)
+            plt.colorbar(im_display, ax=a)
             a.axis("off")
         # convert to wandb image
         wandb_im = wandb.Image(fig)
@@ -46,6 +47,9 @@ class ImageLogger(Callback):
         x0 = x0.cpu()
         if c is not None:
             c = c.cpu()
+        else:
+            # create list of None for condition images
+            c = [None] * x0.size(0)
 
         # generate figures in a list
         figs = [
