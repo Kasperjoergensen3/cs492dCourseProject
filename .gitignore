@@ -161,8 +161,16 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Ignore all files in data/raw/
+# Ignore all files in raw data folders
 data/**/raw/*
 
-# Ignore all .png files in data/processed/ and its subfolders
+# Ignore all .png files in processed data folders
 data/**/processed/**/*.png
+data/**/processed/**/*.ndjson
+data/**/processed/**/data_split.json
+data/**/processed/**/datasplit.json
+models/
+
+GPU_jobs/
+
+*.DS_Store

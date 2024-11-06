@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw
 import random
 import numpy as np
 
+
 def draw_strokes(strokes, height=256, width=256):
     """
     Make a new PIL image with the given strokes
@@ -22,6 +23,7 @@ def draw_strokes(strokes, height=256, width=256):
         image_draw.line(points, fill=0)
 
     return image
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--data_dir", type=str, default="./data")
@@ -46,12 +48,13 @@ with open(os.path.join(args.data_dir, f"{args.category}.ndjson"), "r") as f:
     data = ndjson.load(f)
 
 # randomly sample indices
-sampled_indices = np.random.randint(
-    0, len(data) + 1, 
-    size=min(args.num_train+args.num_test, len(data)))
+num_samples = args.num_train + args.num_test
+assert num_samples <= len(data)
+# Sample unique indices
+sampled_indices = np.random.choice(len(data), size=num_samples, replace=False)
 
-train_indices = sampled_indices[:args.num_train]
-test_indices = sampled_indices[args.num_train:]
+train_indices = sampled_indices[: args.num_train]
+test_indices = sampled_indices[args.num_train :]
 
 # iterate over data
 for idx in train_indices:
@@ -70,10 +73,7 @@ for idx in test_indices:
 train_indices = [int(x) for x in train_indices]
 test_indices = [int(x) for x in test_indices]
 
-train_test_indices = {
-    "train": train_indices,
-    "test": test_indices
-}
+train_test_indices = {"train": train_indices, "test": test_indices}
 
 with open(os.path.join(save_dir, "train_test_indices.json"), "w") as f:
     json.dump(train_test_indices, f)

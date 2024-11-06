@@ -1,4 +1,4 @@
-.PHONY: help create_environment install_requirements download_quickdraw filter_quickdraw clean
+.PHONY: help create_environment install_requirements download_quickdraw filter_quickdraw delete_quickdraw clean
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -18,6 +18,11 @@ help:
 	@echo Python version $(PYTHON_VERSION)
 	@echo Python interpreter $(PYTHON_INTERPRETER)
 
+create_venv:
+	python3 -m venv cs492d
+	source cs492d/bin/activate
+
+
 ## Set up python interpreter environment
 create_environment:
 	conda env remove --name $(PROJECT_NAME) --yes --quiet || true
@@ -35,10 +40,19 @@ download_quickdraw:
 	gsutil -m cp 'gs://quickdraw_dataset/full/simplified/*.ndjson' data/quickdraw/raw/
 
 ## Filter data
-filter_quickdraw:
-	sh scripts/filter_quickdraw/filter_data_all.sh
+process_rawdata:
+#sh scripts/filter_quickdraw/filter_data_all.sh
+	sh scripts/filter_quickdraw/filter_data_seq_all.sh
+
+create_datasplit:
+	sh scripts/filter_quickdraw/create_datasplit_json_all.sh
+
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+
+train
+	train --config baseline.yaml
+	inference --model_folder baseline/v0_20241101_195027
