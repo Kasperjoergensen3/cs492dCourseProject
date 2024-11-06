@@ -169,7 +169,7 @@ data/**/processed/**/*.png
 data/**/processed/**/*.ndjson
 data/**/processed/**/data_split.json
 data/**/processed/**/datasplit.json
-models/
+/models/
 
 GPU_jobs/
 
