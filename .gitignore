@@ -173,4 +173,6 @@ data/**/processed/**/datasplit.json
 
 GPU_jobs/
 
+scripts/
+
 *.DS_Store

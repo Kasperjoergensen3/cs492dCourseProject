@@ -22,6 +22,8 @@ create_venv:
 	python3 -m venv cs492d
 	source cs492d/bin/activate
 
+#source ../../cs492dCourseProject/cs492d/bin/activate
+
 
 ## Set up python interpreter environment
 create_environment:

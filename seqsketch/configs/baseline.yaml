@@ -42,6 +42,7 @@ model:
         beta_start: 1.0e-4
         beta_end: 0.02
         beta_schedule: "squaredcos_cap_v2"
+        clip_sample: False
     num_inference_timesteps: 1000
     lr: 1.0e-4
     lr_schedule: "exponential_decay_0.01"
