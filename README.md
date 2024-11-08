@@ -24,6 +24,7 @@ Course project for CS492(D): Diffusion Models and Their Applications
      ```bash
      make download_quickdraw
      ```
+     It adds .ndjson files to the data folders.
 
 3. **Train and Inference**
 

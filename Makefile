@@ -1,4 +1,4 @@
-.PHONY: help create_environment install_requirements download_quickdraw filter_quickdraw delete_quickdraw clean
+.PHONY: help create_environment install_requirements download_quickdraw clean train
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -33,62 +33,17 @@ install_requirements:
 
 ## Download data
 download_quickdraw:
-	mkdir -p data/quickdraw/raw/
-	gsutil -m cp 'gs://quickdraw_dataset/full/simplified/*.ndjson' data/quickdraw/raw/
-	for category in cat garden helicopter; do \
-		mkdir -p data/quickdraw/processed/$$category; \
-		cp data/quickdraw/raw/$$category.ndjson data/quickdraw/processed/$$category/$$category.ndjson; \
+	for category in "cat" "garden" "helicopter"; do \
+		echo "Processing category: $$category" ; \
+		gsutil -m cp "gs://quickdraw_dataset/full/simplified/$$category.ndjson" "data/quickdraw/processed/$$category/"; \
 	done
-	rm -r data/quickdraw/raw/
-
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+## Train the model
 train:
 	train --config baseline.yaml
 	inference --model_folder baseline/v0_20241101_195027
-
-
-# CS492D Course Project: Sequential Sketch Stroke Generation
-
-Course project for CS492(D): Diffusion Models and Their Applications
-
-[Project Topic](https://github.com/KAIST-Visual-AI-Group/Diffusion-Project-Drawing)
-
-## Get Started
-
-1. **Set Up Environment and Install Requirements**
-
-   - Create the Conda environment:
-     ```bash
-     make create_conda_environment
-     ```
-   - Install the required dependencies:
-     ```bash
-     make install_requirements
-     ```
-
-2. **Install `seqsketch` Package**
-
-   - `seqsketch` is added as an editable package during installation, making it easy to modify and develop.
-
-3. **Download Data**
-
-   - Download the raw data using the following command:
-     ```bash
-     make download_quickdraw
-     ```
-
-4. **Train and Inference**
-
-   - To start training, use commands like:
-     ```bash
-     train --config baseline.yaml
-     ```
-   - For inference, specify the model folder created during training. For example:
-     ```bash
-     inference --model_folder models/baseline/v0_20241101_195027
-     ```
