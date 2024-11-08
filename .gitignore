@@ -171,7 +171,7 @@ data/**/processed/**/data_split.json
 data/**/processed/**/datasplit.json
 /models/
 
-GPU_jobs/
+GPU_jobs/outputs/
 
 scripts/
 
