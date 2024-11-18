@@ -54,7 +54,7 @@ class ImageDataset(Dataset):
         return len(self.data_list)
 
     def __getitem__(self, idx):
-        sample = self.data_list[idx]
+        sample = self.data_list[idx].copy() 
         sample["next_stroke"], sample["next_stroke_mask"] = (
             self.format_strokes_for_model(
                 sample["next_stroke"], self.max_stroke_length, 1

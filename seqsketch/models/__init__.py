@@ -9,5 +9,5 @@ from seqsketch.models.modules import (
     ImageEmbedding,
 )
 from seqsketch.models.unet import UNet
-from seqsketch.models.strokedenoiser import StrokeDenoiser
+from seqsketch.models.strokedenoiser import SingleStrokeEncoder
 from seqsketch.models.schedulers import myDDIMScheduler
